@@ -195,12 +195,14 @@ function! airline#extensions#load()
   endif
 
   " load all other extensions not part of the default distribution
+  echom 'extensions path: '.s:script_path
   for file in split(globpath(&rtp, "autoload/airline/extensions/*.vim"), "\n")
     " we have to check both resolved and unresolved paths, since it's possible
     " that they might not get resolved properly (see #187)
     if stridx(tolower(resolve(fnamemodify(file, ':p'))), s:script_path) < 0
           \ && stridx(tolower(fnamemodify(file, ':p')), s:script_path) < 0
       let name = fnamemodify(file, ':t:r')
+      echom 'script path: '.resolve(fnamemodify(file, ':p'))
       if !get(g:, 'airline#extensions#'.name.'#enabled', 1)
         continue
       endif
